@@ -102,28 +102,6 @@ En synthèse, un firewall est un composant fondamental de la sécurité réseau,
 
 ---
 
-### 🧭 Ressources Debian & Documentation
-
-<p align="center">
-  <a href="https://www.debian.org" target="_blank" title="Site officiel Debian">
-    <img src="https://www.debian.org/logos/openlogo-nd-100.png" alt="Debian Logo" width="70" />
-  </a>
-  &nbsp;&nbsp;&nbsp;
-  <a href="https://wiki.debian.org/" target="_blank" title="Wiki Debian">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/MediaWiki-logo.png" alt="Wiki Debian" width="45"/>
-  </a>
-  &nbsp;&nbsp;&nbsp;
-  <a href="https://www.debian.org/doc/" target="_blank" title="Documentation officielle">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Globe_icon.svg" alt="Docs" width="40"/>
-  </a>
-</p>
-
-<p align="center">
-  <i>🔐 Pour les passionnés de proxy, reverse proxy, pare-feu et infra Debian – explorez les fondamentaux.</i>
-</p>
-
----
-
 <p align="center">
   <b>🔒 Un guide proposé par <a href="https://github.com/0xCyberLiTech">0xCyberLiTech</a> • Pour des tutoriels accessibles à tous. 🔒</b>
 </p>

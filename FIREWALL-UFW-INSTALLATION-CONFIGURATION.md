@@ -1,13 +1,14 @@
-<div style="text-align: center;">
+<p align="center">
   <a href="https://github.com/0xCyberLiTech">
     <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&pause=1000&color=33FF33&center=true&vCenter=true&width=800&lines=FIREWALL+UFW+INSTALLATION+CONFIGURATION" alt="Typing SVG" />
   </a>
+</p>
 
-  <p style="text-align: center;">
-    <em>Un dépôt pédagogique – firewall UFW installation & configuration.</em><br>
-    <b>📘 Apprentissage – 🔐 Sécurité – 🧠 Compréhension</b>
-  </p>
-</div>
+<p align="center">
+  <em>Un dépôt pédagogique – firewall UFW installation & configuration.</em><br>
+  <b>📘 Apprentissage – 🔐 Sécurité – 🧠 Compréhension</b>
+</p>
+
 ---
 
 ### 👨‍💻 **À propos de moi.**

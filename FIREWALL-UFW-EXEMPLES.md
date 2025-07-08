@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <em>Un dépôt pédagogique – firewall UFW exemples.</em><br>
+  <em>Un dépôt pédagogique – firewall UFW par l'exemple.</em><br>
   <b>📘 Apprentissage – 🔐 Sécurité – 🧠 Compréhension</b>
 </p>
 

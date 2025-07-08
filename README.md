@@ -60,7 +60,7 @@ Légende des couleurs des boutons :
 |:---:|:---|:---:|
 | **IPTABLES** | Introduction et configuration. | [<img src="https://img.shields.io/badge/EXPLORER-red?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-IPTABLES-INTRODUCTION-CONFIGURATION.md) |
 | **UFW** | Introduction, installation & configuration. | [<img src="https://img.shields.io/badge/EXPLORER-red?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-UFW-INTRODUCTION-INSTALLATION-CONFIGURATION.md) |
-| **UFW** | Exemples. | [<img src="https://img.shields.io/badge/EXPLORER-red?style=for-the-badge&logo=github&logoColor=white">]() |
+| **UFW** | Exemples. | [<img src="https://img.shields.io/badge/EXPLORER-red?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-UFW-EXEMPLES.md) |
 
 </div>
 

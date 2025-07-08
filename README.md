@@ -6,7 +6,7 @@
 
 <div align="center">
   <p align="center">
-    <em>Un dépôt pédagogique, le firewall.</em><br>
+    <em>Un dépôt pédagogique, qu'est-ce qu'un firewall ?</em><br>
     <b>📊 Monitoring – 📈 Performance – ⚙️ Fiabilité</b>
   </p>
 </div>

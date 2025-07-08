@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <em>Un dépôt pédagogique – firewall UFW installation & configuration.</em><br>
+  <em>Un dépôt pédagogique – iptables introduction & configuration.</em><br>
   <b>📘 Apprentissage – 🔐 Sécurité – 🧠 Compréhension</b>
 </p>
 

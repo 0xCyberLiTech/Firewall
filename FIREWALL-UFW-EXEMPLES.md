@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/0xCyberLiTech">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&pause=1000&color=33FF33&center=true&vCenter=true&width=800&lines=FIREWALL+UFW+:+EXEMPLES+DE+RÈGLES" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&pause=1000&color=D14A4A&center=true&vCenter=true&width=800&lines=FIREWALL+UFW+:+EXEMPLES+DE+RÈGLES" alt="Typing SVG" />
   </a>
 </p>
 

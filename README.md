@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/0xCyberLiTech">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&pause=1000&color=33FF33&center=true&vCenter=true&width=800&lines=FIREWALL+%E2%80%A2+S%C3%89CURIT%C3%89+R%C3%89SEAU;Filtrer+%E2%80%A2+Prot%C3%A9ger+%E2%80%A2+Contr%C3%B4ler;IPTABLES+%E2%80%A2+UFW+%E2%80%A2+R%C3%88GLES+DE+S%C3%89CURIT%C3%89" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&pause=1000&color=D14A4A&center=true&vCenter=true&width=800&lines=FIREWALL+%E2%80%A2+S%C3%89CURIT%C3%89+R%C3%89SEAU;Filtrer+%E2%80%A2+Prot%C3%A9ger+%E2%80%A2+Contr%C3%B4ler;IPTABLES+%E2%80%A2+UFW+%E2%80%A2+R%C3%88GLES+DE+S%C3%89CURIT%C3%89" alt="Typing SVG" />
   </a>
 </div>
 

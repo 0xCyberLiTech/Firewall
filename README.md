@@ -58,8 +58,8 @@ Légende des couleurs des boutons :
 
 | Projet | Description | Accès Rapide |
 |:---:|:---|:---:|
-| **IPTABLES** | Introduction et configuration. | [<img src="https://img.shields.io/badge/EXPLORER-orange?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-IPTABLES-INTRODUCTION-CONFIGURATION.md) |
-| **UFW** | Configurer un pare‑feu local avec **UFW** sur **Debian 12**. | [<img src="https://img.shields.io/badge/EXPLORER-orange?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-UFW-INTRODUCTION-INSTALLATION-CONFIGURATION.md) |
+| **IPTABLES** | Introduction et configuration sur **Debian 12**. | [<img src="https://img.shields.io/badge/EXPLORER-orange?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-IPTABLES-INTRODUCTION-CONFIGURATION.md) |
+| **UFW** | Introduction et configuration sur **Debian 12**. | [<img src="https://img.shields.io/badge/EXPLORER-orange?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-UFW-INTRODUCTION-INSTALLATION-CONFIGURATION.md) |
 | **UFW** | Exemples. | [<img src="https://img.shields.io/badge/EXPLORER-orange?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-UFW-EXEMPLES.md) |
 
 </div>

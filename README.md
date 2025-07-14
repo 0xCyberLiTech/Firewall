@@ -9,6 +9,10 @@
     <em>Un dépôt pédagogique, qu'est-ce qu'un firewall ?</em><br>
     <b>📊 Monitoring – 📈 Performance – ⚙️ Fiabilité</b>
   </p>
+
+[![Dernière version](https://img.shields.io/github/v/release/0xCyberLiTech/Firewall?style=flat-square&color=blue)](https://github.com/0xCyberLiTech/Firewall/releases/latest)
+
+  
 </div>
 
 ---

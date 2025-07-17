@@ -11,7 +11,7 @@
   </p>
 
 [![Dernière version](https://img.shields.io/github/v/release/0xCyberLiTech/Firewall?style=flat-square&color=blue)](https://github.com/0xCyberLiTech/Firewall/releases/latest)
-
+[![Changelog](https://img.shields.io/badge/📄%20CHANGELOG-Firewall-blue)](https://github.com/0xCyberLiTech/Firewall/blob/main/CHANGELOG.md)
   
 </div>
 

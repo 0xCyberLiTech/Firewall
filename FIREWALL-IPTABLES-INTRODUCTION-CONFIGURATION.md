@@ -1,17 +1,21 @@
 <div align="center">
-<p align="center">
-  <a href="https://github.com/0xCyberLiTech">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&pause=1000&color=D14A4A&center=true&vCenter=true&width=800&lines=IPTABLES+:+INTRODUCTION+ET+CONFIGURATION" alt="Typing SVG" />
-  </a>
-</p>
 
-<p align="center">
-  <em>Un dépôt pédagogique – `Iptables` pour la Sécurité Linux.</em><br>
-  <b>📘 Apprentissage – 🔐 Sécurité – 🧠 Compréhension</b>
-</p>
+  <p align="center">
+    <a href="https://github.com/0xCyberLiTech">
+      <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&pause=1000&color=D14A4A&center=true&vCenter=true&width=800&lines=IPTABLES+:+INTRODUCTION+ET+CONFIGURATION" alt="Typing SVG" />
+    </a>
+  </p>
 
+  <p align="center">
+    <em>Un dépôt pédagogique – `Iptables` pour la Sécurité Linux.</em><br>
+    <b>📘 Apprentissage – 🔐 Sécurité – 🧠 Compréhension</b>
+  </p>
 
-
+  [![🔗 Profil GitHub](https://img.shields.io/badge/Profil-GitHub-181717?logo=github&style=flat-square)](https://github.com/0xCyberLiTech)
+  [![📦 Dernière version](https://img.shields.io/github/v/release/0xCyberLiTech/Firewall?label=version&style=flat-square&color=blue)](https://github.com/0xCyberLiTech/Firewall/releases/latest)
+  [![📄 CHANGELOG](https://img.shields.io/badge/📄%20Changelog-Firewall-blue?style=flat-square)](https://github.com/0xCyberLiTech/Firewall/blob/main/CHANGELOG.md)
+  [![📂 Dépôts publics](https://img.shields.io/badge/Dépôts-publics-blue?style=flat-square)](https://github.com/0xCyberLiTech?tab=repositories)
+  [![👥 Contributeurs](https://img.shields.io/badge/👥%20Contributeurs-cliquez%20ici-007ec6?style=flat-square)](https://github.com/0xCyberLiTech/Firewall/graphs/contributors)
 
 </div>
 

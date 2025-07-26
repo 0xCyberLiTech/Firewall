@@ -1,13 +1,14 @@
-<p align="center">
-  <a href="https://github.com/0xCyberLiTech">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&pause=1000&color=D14A4A&center=true&vCenter=true&width=800&lines=FIREWALL+UFW+INSTALLATION+CONFIGURATION" alt="Typing SVG" />
-  </a>
-</p>
+<div align="center">
+  <p align="center">
+    <a href="https://github.com/0xCyberLiTech">
+      <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&pause=1000&color=D14A4A&center=true&vCenter=true&width=800&lines=FIREWALL+UFW+INSTALLATION+CONFIGURATION" alt="Typing SVG" />
+    </a>
+  </p>
 
-<p align="center">
-  <em>Un dépôt pédagogique – Configurer un pare‑feu local avec **UFW** sur **Debian 12**.</em><br>
-  <b>📘 Apprentissage – 🔐 Sécurité – 🧠 Compréhension</b>
-</p>
+  <p align="center">
+    <em>Un dépôt pédagogique – Configurer un pare‑feu local avec **UFW** sur **Debian 12**.</em><br>
+    <b>📘 Apprentissage – 🔐 Sécurité – 🧠 Compréhension</b>
+  </p>
 
   [![🔗 Profil GitHub](https://img.shields.io/badge/Profil-GitHub-181717?logo=github&style=flat-square)](https://github.com/0xCyberLiTech)
   [![📦 Dernière version](https://img.shields.io/github/v/release/0xCyberLiTech/Firewall?label=version&style=flat-square&color=blue)](https://github.com/0xCyberLiTech/Firewall/releases/latest)

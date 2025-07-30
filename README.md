@@ -67,7 +67,7 @@ Légende des couleurs des boutons :
 |:---:|:---|:---:|
 | **IPTABLES** | Introduction et configuration sur **Debian 12**. | [<img src="https://img.shields.io/badge/EXPLORER-brightgreen?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-IPTABLES-INTRODUCTION-CONFIGURATION.md) |
 | **UFW** | Introduction et configuration sur **Debian 12**. | [<img src="https://img.shields.io/badge/EXPLORER-brightgreen?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-UFW-INTRODUCTION-INSTALLATION-CONFIGURATION.md) |
-| **UFW** | Exemples. | [<img src="https://img.shields.io/badge/EXPLORER-red?style=for-the-badge&logo=github&logoColor=white">](https://github.com/0xCyberLiTech/Firewall/blob/main/README.md) |
+| **UFW** | Exemples. | [<img src="https://img.shields.io/badge/EXPLORER-red?style=for-the-badge&logo=github&logoColor=white">]() |
 
 </div>
 

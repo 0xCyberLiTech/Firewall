@@ -9,7 +9,7 @@
   <br></br>
 
   <p align="center">
-    <em>Introduction et configuration sur Debian 12.	.</em><br>
+    <em>Introduction et configuration sur Debian 12.</em><br>
     <b>📘 Apprentissage – 🔐 Sécurité – 🧠 Compréhension</b>
   </p>
 

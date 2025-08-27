@@ -36,34 +36,36 @@
 
 </div>
 
+<!--
+Optimisation SEO : mots-clés cybersécurité, Linux, administration système, sécurité informatique, tutoriels, guides, expertise, formation, supervision, Docker, OpenVAS, firewall, proxy, DNS, SSH, Debian, IT, réseau, cryptographie, open source, ressources techniques, étudiants, professionnels, passionnés.
+-->
+
+<div align="center">
+  <img src="https://img.icons8.com/fluency/96/000000/cyber-security.png" alt="CyberSec" width="80"/>
+</div>
+
+<div align="center">
+  <p>
+    <strong>Cybersécurité</strong> <img src="https://img.icons8.com/color/24/000000/lock--v1.png"/> • <strong>Linux Debian</strong> <img src="https://img.icons8.com/color/24/000000/linux.png"/> • <strong>Sécurité informatique</strong> <img src="https://img.icons8.com/color/24/000000/shield-security.png"/>
+  </p>
+</div>
+
 ---
 
-### 👨‍💻 **À propos de moi**
+## 🚀 À propos & Objectifs
 
-> Bienvenue sur le dépôt <strong>0xCyberLiTech</strong>, votre laboratoire numérique pour l'<strong>apprentissage</strong> et la <strong>vulgarisation</strong> de la <strong>cybersécurité</strong>, de l'<strong>administration Linux Debian</strong> et de la <strong>sécurité informatique</strong>.
-> Passionné par <strong>Linux</strong>, la <strong>cryptographie</strong>, la <strong>supervision réseau</strong> et les <strong>systèmes sécurisés</strong>, je partage ici des <strong>tutoriels</strong>, <strong>guides pratiques</strong>, <strong>fiches techniques</strong> et <strong>retours d'expérience</strong> pour renforcer vos compétences IT.
->
-> 🎯 <strong>Objectif :</strong> Offrir un contenu structuré, accessible et optimisé pour le référencement naturel, destiné aux étudiants, professionnels, administrateurs système, experts en sécurité et curieux du monde numérique.
+Ce projet propose des solutions innovantes et accessibles en cybersécurité, avec une approche centrée sur la simplicité d’utilisation et l’efficacité. Il vise à accompagner les utilisateurs dans la protection de leurs données et systèmes, tout en favorisant l’apprentissage et le partage des connaissances.
 
-<p align="center">
-  <a href="https://github.com/0xCyberLiTech" target="_blank" rel="noopener">
-    <img src="https://skillicons.dev/icons?i=linux,debian,bash,docker,nginx,git,vim,python,markdown" alt="Skills" width="420">
-  </a>
-</p>
-
----
-
-### 🎯 **Objectif de ce dépôt.**
-
-> Ce dépôt a pour vocation de centraliser un ensemble de notions clés concernant le Firewall. Il s'adresse aux passionnés, étudiants et professionnels souhaitant mieux comprendre les enjeux de cet équipement de
-> sécurité fondamental, apprendre à mettre en place ses configurations efficaces, et se familiariser avec les concepts et bonnes pratiques pour maintenir la performance et la stabilité de leurs systèmes
-> d'information face aux menaces externes.
+Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoins de :
+- 🎓 Étudiants : approfondir les connaissances
+- 👨‍💻 Professionnels IT : outils et pratiques
+- 🖥️ Administrateurs système : sécuriser l’infrastructure
+- 🛡️ Experts cybersécurité : ressources techniques
+- 🚀 Passionnés du numérique : explorer les bonnes pratiques
 
 ---
 
 # 🔥 Configurer un pare‑feu local avec **UFW** sur **Debian 12**
-
----
 
 ## 1. Pourquoi un pare‑feu ?
 Un pare‑feu limite l’exposition d’un serveur :
@@ -73,26 +75,33 @@ Un pare‑feu limite l’exposition d’un serveur :
 
 ---
 
-## 2. Installation et premiers réglages
+## 2. Installation et premiers réglages.
+
 ```bash
 sudo apt update && sudo apt install ufw -y
 ```
+
 > ⚠️ **Toujours** disposer d’un accès console (KVM/virtuel ou physique) avant d’activer un pare‑feu, au cas où la connexion SSH se verrouille.
 
 ### 2.1 – Activer IPv6
+
 UFW gère IPv6. Vérifie que `IPV6=yes` dans `/etc/default/ufw` puis :
+
 ```bash
 sudo ufw reload
 ```
 
 ### 2.2 – Définir les politiques par défaut (stratégie « deny by default »)
+
 ```bash
 sudo ufw default deny incoming   # tout trafic entrant bloqué
 sudo ufw default allow outgoing  # tout trafic sortant autorisé
 ```
+
 > 👉 Inverse **allow ↔ deny** si tu veux une machine _cloisonnée_ même en sortie.
 
 ### 2.3 – Autoriser le SSH avant d’activer le pare‑feu
+
 ```bash
 # Port standard
 sudo ufw allow 22/tcp
@@ -101,6 +110,7 @@ sudo ufw allow 2266/tcp
 ```
 
 ### 2.4 – Activation
+
 ```bash
 sudo ufw enable   # répondre y
 ```
@@ -110,6 +120,7 @@ Le pare‑feu se lancera automatiquement au démarrage (`systemctl status ufw`).
 
 ## 3. Commandes essentielles
 ### 3.1 – Lister les règles
+
 ```bash
 sudo ufw status numbered    # affichage compact avec numéros
 sudo ufw status verbose     # détails + IPv6 + policies
@@ -124,6 +135,7 @@ sudo ufw status verbose     # détails + IPv6 + policies
 | Autoriser **une IP** | `sudo ufw allow from 203.0.113.42 to any port 54321 proto tcp` |
 
 ### 3.3 – Bloquer des flux
+
 ```bash
 # Bloquer une IP source\sudo ufw deny from 203.0.113.66
 
@@ -132,23 +144,27 @@ sudo ufw deny out 25/tcp
 ```
 
 ### 3.4 – Supprimer / réinitialiser
+
 ```bash
 sudo ufw delete <numéro>   # après ufw status numbered
 sudo ufw reset             # RAZ totale (demande confirmation)
 ```
 
 ### 3.5 – Profils applicatifs
+
 ```bash
 sudo ufw app list              # voir la liste
 sudo ufw app info "Samba"       # détails (ports, proto)
 sudo ufw allow "Nginx Full"     # ouvre 80 + 443
 ```
+
 Les profils sont stockés dans `/etc/ufw/applications.d/`.
 
 ---
 
 ## 4. Exemples pratiques (scénarios)
 ### 4.1 – Serveur web + SSH restreint
+
 ```bash
 sudo ufw reset
 sudo ufw default deny incoming
@@ -161,12 +177,14 @@ sudo ufw enable
 ```
 
 ### 4.2 – Limiter le brute‑force SSH (rate limiting)
+
 ```bash
 # Autorise 10 nouvelles connexions par 30 s (IPv4 + IPv6)
 sudo ufw limit 22/tcp comment "Anti brute‑force"
 ```
 
 ### 4.3 – Bloquer tout sauf mises à jour APT sortantes
+
 ```bash
 sudo ufw reset
 sudo ufw default deny incoming
@@ -193,6 +211,7 @@ sudo ufw enable
 ---
 
 ## 6. Journalisation (logs)
+
 ```bash
 sudo ufw logging medium   # low | medium | high
 # logs : /var/log/ufw.log (rsyslog) ou journalctl -u ufw
@@ -205,6 +224,7 @@ sudo ufw logging medium   # low | medium | high
 ---
 
 ## 7. Sauvegarde et restauration manuelle
+
 ```bash
 sudo ufw export > ufw-backup.conf   # exporte les règles
 sudo ufw import ufw-backup.conf     # restaure
@@ -213,6 +233,7 @@ sudo ufw import ufw-backup.conf     # restaure
 ---
 
 ## 8. Désactivation temporaire
+
 ```bash
 sudo ufw disable       # stoppe le pare‑feu
 sudo ufw enable        # ré‑active

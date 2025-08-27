@@ -52,7 +52,7 @@ Optimisation SEO : mots-clés cybersécurité, Linux, administration système, s
 
 ---
 
-## 🚀 À propos & Objectifs
+## 🚀 À propos & Objectifs.
 
 Ce projet propose des solutions innovantes et accessibles en cybersécurité, avec une approche centrée sur la simplicité d’utilisation et l’efficacité. Il vise à accompagner les utilisateurs dans la protection de leurs données et systèmes, tout en favorisant l’apprentissage et le partage des connaissances.
 
@@ -112,26 +112,30 @@ iptables -A [chaîne] [filtres] -j [action]
 
 ---
 
-## 🔧 Exemples de règles commentées
+## 🔧 Exemples de règles commentées.
 
-### Autoriser loopback (localhost)
+### Autoriser loopback (localhost).
+
 ```bash
 iptables -A INPUT -i lo -j ACCEPT
 ```
 
-### Politique par défaut stricte
+### Politique par défaut stricte.
+
 ```bash
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
 iptables -P OUTPUT ACCEPT
 ```
 
-### Autoriser ping (ICMP)
+### Autoriser ping (ICMP).
+
 ```bash
 iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 ```
 
-### Autoriser SSH (port 22)
+### Autoriser SSH (port 22).
+
 ```bash
 iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
@@ -143,34 +147,39 @@ iptables -A INPUT -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTAB
 iptables -A OUTPUT -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
 ```
 
-### Autoriser une IP WAN à accéder à un port spécifique
+### Autoriser une IP WAN à accéder à un port spécifique.
+
 ```bash
 iptables -A INPUT -p tcp -s 203.0.113.42 --dport 54321 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 54321 -d 203.0.113.42 -m state --state ESTABLISHED -j ACCEPT
 ```
 
-### Bloquer les autres connexions sur ce port
+### Bloquer les autres connexions sur ce port.
+
 ```bash
 iptables -A INPUT -p tcp --dport 54321 -j DROP
 ```
 
 ---
 
-## 🛡️ Limiter les connexions (anti-brute-force)
+## 🛡️ Limiter les connexions (anti-brute-force).
 
-### Limiter SSH à 3 tentatives par minute (module `recent`)
+### Limiter SSH à 3 tentatives par minute (module `recent`).
+
 ```bash
 iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH
 iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 3 --name SSH -j DROP
 ```
 
 ### Blocage temporaire avec TTL
+
 ```bash
 iptables -A INPUT -p tcp --dport 22 -m recent --set --name SSH
 iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 5 --rttl --name SSH -j DROP
 ```
 
-### Limite de 3 connexions par minute avec `hashlimit`
+### Limite de 3 connexions par minute avec `hashlimit`.
+
 ```bash
 iptables -A INPUT -p tcp --dport 22 -m hashlimit --hashlimit 3/min --hashlimit-burst 3 \
 --hashlimit-mode srcip --hashlimit-name ssh_limit -j ACCEPT
@@ -179,15 +188,17 @@ iptables -A INPUT -p tcp --dport 22 -j DROP
 
 ---
 
-## 💾 Sauvegarde et nettoyage
+## 💾 Sauvegarde et nettoyage.
 
-### Sauvegarder les règles (Debian/Ubuntu)
+### Sauvegarder les règles (Debian/Ubuntu).
+
 ```bash
 sudo apt install iptables-persistent
 iptables-save > /etc/iptables/rules.v4
 ```
 
-### Nettoyer les règles
+### Nettoyer les règles.
+
 ```bash
 iptables -F
 iptables -X
@@ -202,6 +213,7 @@ iptables -t nat -F
 - Documenter chaque règle dans un script.
 - Utiliser `iptables -L -v -n --line-numbers` pour vérifier les règles.
 - Pour activer les logs :
+
   ```bash
   iptables -A INPUT -j LOG --log-prefix "iptables INPUT DROP: " --log-level 4
   ```
@@ -253,6 +265,12 @@ iptables -A INPUT -j LOG --log-prefix "[IPTABLES BLOCK] " --log-level 4
 Ce script peut être rendu exécutable via `chmod +x firewall.sh`, puis lancé avec `sudo ./firewall.sh`.
 
 ---
+
+<p align="center">
+  <a href="https://github.com/0xCyberLiTech" target="_blank" rel="noopener">
+    <img src="https://skillicons.dev/icons?i=linux,debian,bash,docker,nginx,git,vim,python,markdown" alt="Skills" width="420">
+  </a>
+</p>
 
 <p align="center">
   <b>🔒 Un guide proposé par <a href="https://github.com/0xCyberLiTech">0xCyberLiTech</a> • Pour des tutoriels accessibles à tous. 🔒</b>

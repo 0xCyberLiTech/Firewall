@@ -124,12 +124,13 @@ En synthèse, un firewall est un composant fondamental de la sécurité réseau,
 
 ---
 
-<p align="center">
-  <a href="https://github.com/0xCyberLiTech" target="_blank" rel="noopener">
-    <img src="https://skillicons.dev/icons?i=linux,debian,bash,docker,nginx,git,vim,python,markdown" alt="Skills" width="420">
-  </a>
-</p>
 
-<p align="center">
+<div align="center">
+  <a href="https://github.com/0xCyberLiTech" target="_blank" rel="noopener">
+    <img src="https://skillicons.dev/icons?i=linux,debian,bash,docker,nginx,git,vim,python,markdown" alt="Skills" width="440">
+  </a>
+</div>
+
+<div align="center">
   <b>🔒 Un guide proposé par <a href="https://github.com/0xCyberLiTech">0xCyberLiTech</a> • Pour des tutoriels accessibles à tous. 🔒</b>
-</p>
+</div>

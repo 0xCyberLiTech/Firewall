@@ -168,8 +168,6 @@ tail -f /var/log/ufw.log
 
 ---
 
----
-
 ## 🔵 Session Avancée – « Devenir maître de son firewall »
 
 Ton serveur héberge plus de services. Tu veux maintenant :  

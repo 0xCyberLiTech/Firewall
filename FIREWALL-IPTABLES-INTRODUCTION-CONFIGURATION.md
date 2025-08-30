@@ -62,202 +62,247 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
 
 ---
 
-# 🔒 `Iptables` pour la Sécurité Linux :
+# 🔒 TP — Sécuriser Linux avec `iptables`
 
-## 🔗 Qu'est-ce que `iptables` ?
-
-`iptables` est un outil en ligne de commande sous Linux qui permet de :
-- Contrôler le trafic réseau entrant, sortant et transitant.
-- Appliquer des règles de sécurité sur les connexions.
-- Créer un pare-feu robuste adapté aux besoins de l'administrateur.
+## 🎯 Objectifs pédagogiques
+À la fin de ce TP, vous serez capable de :
+- Comprendre la logique de fonctionnement de `iptables`.
+- Créer un pare-feu basique et progressif.
+- Tester et vérifier vos règles sans bloquer votre accès SSH.
+- Sauvegarder et restaurer vos configurations.
 
 ---
 
-## 🛠️ Structure de base
+## 🔗 1. Qu’est-ce que `iptables` ?
+
+`iptables` est un outil en ligne de commande permettant de **contrôler le trafic réseau** sous Linux.  
+Il agit comme un **pare-feu** logiciel :
+
+- ✅ Autoriser certains flux (web, SSH, ping, etc.)
+- ❌ Bloquer ou rejeter les flux indésirables (attaques, scans, ports inutiles)
+- 🔄 Rediriger ou modifier des paquets
+
+👉 **En résumé :** c’est la "porte de sécurité" de votre machine.
+
+---
+
+## 🛠️ 2. Structure d’une règle
+
+Une règle `iptables` suit cette logique :
 
 ```bash
 iptables -A [chaîne] [filtres] -j [action]
 ```
 
-| Option        | Description                              |
-|---------------|------------------------------------------|
-| `-A`          | Ajoute une règle à une chaîne            |
-| `-p`          | Protocole concerné (tcp, udp, icmp)       |
-| `--dport`     | Port de destination                      |
-| `-s` / `-d`   | IP source / destination                  |
-| `-j`          | Action : `ACCEPT`, `DROP`, `REJECT`, etc |
+| Élément       | Exemple                         | Rôle                                      |
+|---------------|---------------------------------|-------------------------------------------|
+| `-A`          | `-A INPUT`                      | Ajouter une règle à une chaîne            |
+| `-p`          | `-p tcp`                        | Spécifier un protocole (tcp, udp, icmp)   |
+| `--dport`     | `--dport 22`                    | Port de destination                       |
+| `-s` / `-d`   | `-s 203.0.113.42`               | IP source / IP destination                |
+| `-j`          | `-j ACCEPT` / `DROP` / `REJECT` | Action appliquée au paquet                |
 
 ---
 
-## 📊 Chaînes principales
+## 📊 3. Les chaînes principales
 
-| Chaîne    | Rôle                                      |
+`iptables` traite les paquets en fonction de **chaînes** :
+
+| Chaîne    | Rôle                                       |
 |-----------|--------------------------------------------|
-| `INPUT`   | Trafic entrant vers la machine              |
-| `OUTPUT`  | Trafic sortant depuis la machine            |
-| `FORWARD` | Trafic traversant la machine (routeur)      |
+| `INPUT`   | Trafic entrant vers la machine             |
+| `OUTPUT`  | Trafic sortant depuis la machine           |
+| `FORWARD` | Trafic traversant la machine (routage)     |
 
 ---
 
-## 📁 Tables principales
+## 📁 4. Les tables principales
 
 | Table     | Usage                                      |
 |-----------|--------------------------------------------|
-| `filter`  | Filtrage des paquets (par défaut)           |
-| `nat`     | Redirection/NAT des connexions              |
-| `mangle`  | Modification de paquets (TTL, marquage...)  |
+| `filter`  | Filtrage classique (par défaut)            |
+| `nat`     | Traduction/routage (NAT, redirections)     |
+| `mangle`  | Modification avancée des paquets           |
 
 ---
 
-## 🔧 Exemples de règles commentées.
+## 🔬 5. Mise en pratique pas à pas
 
-### Autoriser loopback (localhost).
-
+### Étape 1 — Vérifier les règles existantes
 ```bash
-iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -L -v -n
 ```
-
-### Politique par défaut stricte.
-
-```bash
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
-iptables -P OUTPUT ACCEPT
-```
-
-### Autoriser ping (ICMP).
-
-```bash
-iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
-```
-
-### Autoriser SSH (port 22).
-
-```bash
-iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
-```
-
-### Autoriser HTTP/HTTPS
-```bash
-iptables -A INPUT -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
-```
-
-### Autoriser une IP WAN à accéder à un port spécifique.
-
-```bash
-iptables -A INPUT -p tcp -s 203.0.113.42 --dport 54321 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 54321 -d 203.0.113.42 -m state --state ESTABLISHED -j ACCEPT
-```
-
-### Bloquer les autres connexions sur ce port.
-
-```bash
-iptables -A INPUT -p tcp --dport 54321 -j DROP
-```
+👉 Vous devriez voir des règles par défaut (souvent `ACCEPT` partout).
 
 ---
 
-## 🛡️ Limiter les connexions (anti-brute-force).
-
-### Limiter SSH à 3 tentatives par minute (module `recent`).
-
+### Étape 2 — Nettoyer la configuration (⚠️ à ne faire que sur une VM/test)
 ```bash
-iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH
-iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 3 --name SSH -j DROP
+sudo iptables -F
+sudo iptables -X
+sudo iptables -t nat -F
+```
+👉 Votre pare-feu est maintenant vide.
+
+---
+
+### Étape 3 — Définir une politique par défaut
+```bash
+sudo iptables -P INPUT DROP
+sudo iptables -P FORWARD DROP
+sudo iptables -P OUTPUT ACCEPT
+```
+- On bloque **tout en entrée** sauf ce que l’on autorise explicitement.
+- On autorise **tout en sortie**.
+
+---
+
+### Étape 4 — Autoriser le trafic de base
+- **Boucle locale (loopback)** :
+```bash
+sudo iptables -A INPUT -i lo -j ACCEPT
 ```
 
-### Blocage temporaire avec TTL
-
+- **Connexions déjà établies** :
 ```bash
-iptables -A INPUT -p tcp --dport 22 -m recent --set --name SSH
-iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 5 --rttl --name SSH -j DROP
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 ```
 
-### Limite de 3 connexions par minute avec `hashlimit`.
+👉 Ainsi, les réponses aux connexions sortantes (comme `apt update`) passent bien.
 
+---
+
+### Étape 5 — Autoriser services essentiels
+- **SSH (port 22)** :
 ```bash
-iptables -A INPUT -p tcp --dport 22 -m hashlimit --hashlimit 3/min --hashlimit-burst 3 \
---hashlimit-mode srcip --hashlimit-name ssh_limit -j ACCEPT
-iptables -A INPUT -p tcp --dport 22 -j DROP
+sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+```
+
+- **Web (HTTP/HTTPS)** :
+```bash
+sudo iptables -A INPUT -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
+```
+
+- **Ping (ICMP)** :
+```bash
+sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 ```
 
 ---
 
-## 💾 Sauvegarde et nettoyage.
+### Étape 6 — Cas pratique : accès limité à un port
+👉 Exemple : seul l’hôte `203.0.113.42` peut accéder au port `54321`.
 
-### Sauvegarder les règles (Debian/Ubuntu).
+```bash
+sudo iptables -A INPUT -p tcp -s 203.0.113.42 --dport 54321 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 54321 -j DROP
+```
 
+---
+
+### Étape 7 — Protection contre brute-force SSH
+Limiter à **3 tentatives par minute** :
+
+```bash
+sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH
+sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update \
+--seconds 60 --hitcount 3 --name SSH -j DROP
+```
+
+---
+
+### Étape 8 — Activer les logs
+```bash
+sudo iptables -A INPUT -j LOG --log-prefix "[IPTABLES BLOCK] " --log-level 4
+```
+
+👉 Les journaux apparaîtront dans `/var/log/syslog` ou `/var/log/messages`.
+
+---
+
+## 💾 6. Sauvegarder et restaurer
+
+- **Installation de l’outil de persistance (Debian/Ubuntu)** :
 ```bash
 sudo apt install iptables-persistent
-iptables-save > /etc/iptables/rules.v4
 ```
 
-### Nettoyer les règles.
-
+- **Sauvegarder les règles** :
 ```bash
-iptables -F
-iptables -X
-iptables -t nat -F
+sudo iptables-save > /etc/iptables/rules.v4
+```
+
+- **Restaurer** :
+```bash
+sudo iptables-restore < /etc/iptables/rules.v4
 ```
 
 ---
 
-## ✅ Bonnes pratiques
-
-- Toujours tester dans une session SSH secondaire.
-- Documenter chaque règle dans un script.
-- Utiliser `iptables -L -v -n --line-numbers` pour vérifier les règles.
-- Pour activer les logs :
-
-  ```bash
-  iptables -A INPUT -j LOG --log-prefix "iptables INPUT DROP: " --log-level 4
-  ```
-
----
-
-## 📜 Exemple de script iptables complet (pare-feu personnel de base)
+## 📜 7. Exemple de script complet (pare-feu basique)
 
 ```bash
 #!/bin/bash
+# Script de configuration iptables (firewall.sh)
 
-# Nettoyage des règles existantes
+# 🔄 Nettoyage des règles
 iptables -F
 iptables -X
 iptables -t nat -F
 
-# Politique par défaut
+# 🔐 Politiques par défaut
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
 iptables -P OUTPUT ACCEPT
 
-# Autoriser loopback
+# 🔁 Loopback
 iptables -A INPUT -i lo -j ACCEPT
 
-# Autoriser connexions établies
+# 🔗 Connexions établies
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-# Autoriser SSH (limité à 3 tentatives/min par IP)
+# 🔑 SSH sécurisé
 iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH
-iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 3 --name SSH -j DROP
+iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update \
+--seconds 60 --hitcount 3 --name SSH -j DROP
 iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
 
-# HTTP/HTTPS
+# 🌐 Web
 iptables -A INPUT -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
 
-# Exemple : accès restreint au port 54321 depuis IP WAN
-iptables -A INPUT -p tcp -s 203.0.113.42 --dport 54321 -m state --state NEW,ESTABLISHED -j ACCEPT
+# 🎯 Port restreint
+iptables -A INPUT -p tcp -s 203.0.113.42 --dport 54321 -j ACCEPT
 iptables -A INPUT -p tcp --dport 54321 -j DROP
-iptables -A OUTPUT -p tcp --sport 54321 -d 203.0.113.42 -m state --state ESTABLISHED -j ACCEPT
 
-# Logging optionnel
+# 📝 Logging
 iptables -A INPUT -j LOG --log-prefix "[IPTABLES BLOCK] " --log-level 4
 ```
 
-Ce script peut être rendu exécutable via `chmod +x firewall.sh`, puis lancé avec `sudo ./firewall.sh`.
+Rendre exécutable :
+```bash
+chmod +x firewall.sh
+sudo ./firewall.sh
+```
+
+---
+
+## ✅ 8. Bonnes pratiques
+
+- ⚠️ Toujours tester sur une **session SSH secondaire** avant de fermer la session principale.
+- 📖 Documenter vos règles dans un fichier versionné (`git` par exemple).
+- 🔍 Vérifier l’ordre des règles : `iptables -L -v -n --line-numbers`.
+- 🛠️ Préparer un script de remise à zéro si vous vous bloquez :
+```bash
+#!/bin/bash
+iptables -F
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+```
 
 ---
 

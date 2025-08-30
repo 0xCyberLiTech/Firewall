@@ -121,7 +121,7 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
    └───────────────────┘
             |
             v
-      🚫 Attaquant bloqué
+      Attaquant bloqué
 ```
 
 💡 **Résumé visuel** : Fail2ban est l’intelligence qui lit les logs, et UFW applique le blocage réseau.

@@ -62,188 +62,227 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
 
 ---
 
-# 🔥 Configurer un pare‑feu local avec **UFW** sur **Debian 12**
-
-## 1. Pourquoi un pare‑feu ?
-Un pare‑feu limite l’exposition d’un serveur :
-- **Filtrage entrant** : seuls les services voulus sont accessibles.
-- **Filtrage sortant** : la machine ne parle qu’aux destinations autorisées (utile contre l’exfiltration).
-- **Journalisation** : traçabilité des tentatives d’accès.
+# 🔥 TP – Sécuriser son serveur Debian 12/13 avec UFW
 
 ---
 
-## 2. Installation et premiers réglages.
+## 📑 Sommaire
+- [🟢 Session Débutant – « Premiers pas avec UFW »](#-session-débutant--premiers-pas-avec-ufw)
+  - [1. Pourquoi un pare-feu ?](#1-pourquoi-un-pare-feu-)
+  - [2. Installation](#2-installation)
+  - [3. Poser les bases : politique « deny by default »](#3-poser-les-bases--politique-deny-by-default)
+  - [4. Ne pas se bloquer soi-même → autoriser SSH](#4-ne-pas-se-bloquer-soi-même--autoriser-ssh)
+  - [5. Activer le pare-feu](#5-activer-le-pare-feu)
+  - [6. Exemple concret : premier serveur web](#6-exemple-concret--premier-serveur-web)
+  - [7. Journalisation](#7-journalisation)
+- [🔵 Session Avancée – « Devenir maître de son firewall »](#-session-avancée--devenir-maître-de-son-firewall)
+  - [1. Cloisonner les flux sortants](#1-cloisonner-les-flux-sortants)
+  - [2. Restreindre SSH à ton IP d’admin](#2-restreindre-ssh-à-ton-ip-dadmin)
+  - [3. Bloquer les menaces](#3-bloquer-les-menaces)
+  - [4. Protection brute-force SSH](#4-protection-brute-force-ssh)
+  - [5. Profils applicatifs](#5-profils-applicatifs)
+  - [6. Tuning interne (iptables derrière UFW)](#6-tuning-interne-iptables-derrière-ufw)
+  - [7. Sauvegarder et restaurer](#7-sauvegarder-et-restaurer)
+  - [8. Surveiller en temps réel](#8-surveiller-en-temps-réel)
+  - [9. Bonnes pratiques](#9-bonnes-pratiques)
+- [🎯 Conclusion du TP](#-conclusion-du-tp)
 
+---
+
+## 🟢 Session Débutant – « Premiers pas avec UFW »
+
+### 1. Pourquoi un pare-feu ?
+Un pare-feu limite l’exposition d’un serveur :  
+- **Filtrage entrant** : seuls les services voulus sont accessibles.  
+- **Filtrage sortant** : la machine ne parle qu’aux destinations autorisées.  
+- **Journalisation** : traçabilité des tentatives d’accès.  
+
+⚠️ **Attention** : un serveur sans pare-feu expose *tous ses services* à Internet → c’est comme laisser toutes les portes et fenêtres ouvertes.
+
+---
+
+### 2. Installation
 ```bash
 sudo apt update && sudo apt install ufw -y
 ```
 
-> ⚠️ **Toujours** disposer d’un accès console (KVM/virtuel ou physique) avant d’activer un pare‑feu, au cas où la connexion SSH se verrouille.
+⚠️ **Conseil sécurité** : garde toujours une **deuxième porte ouverte** (console physique ou accès console VPS) pour éviter de perdre ton SSH.
 
-### 2.1 – Activer IPv6
+---
 
-UFW gère IPv6. Vérifie que `IPV6=yes` dans `/etc/default/ufw` puis :
-
+### 3. Poser les bases : politique « deny by default »
 ```bash
-sudo ufw reload
+sudo ufw default deny incoming   # bloquer tout ce qui arrive
+sudo ufw default allow outgoing  # autoriser ce qui sort
 ```
 
-### 2.2 – Définir les politiques par défaut (stratégie « deny by default »)
+💡 **Astuce** : comme une boîte fermée → rien n’entre, sauf ce que tu autorises.
 
+---
+
+### 4. Ne pas se bloquer soi-même → autoriser SSH
 ```bash
-sudo ufw default deny incoming   # tout trafic entrant bloqué
-sudo ufw default allow outgoing  # tout trafic sortant autorisé
-```
-
-> 👉 Inverse **allow ↔ deny** si tu veux une machine _cloisonnée_ même en sortie.
-
-### 2.3 – Autoriser le SSH avant d’activer le pare‑feu
-
-```bash
-# Port standard
 sudo ufw allow 22/tcp
-# Ou port personnalisé (ex : 2266)
+```
+👉 Si ton SSH est sur un port personnalisé (exemple : `2266`) :
+```bash
 sudo ufw allow 2266/tcp
 ```
 
-### 2.4 – Activation
-
-```bash
-sudo ufw enable   # répondre y
-```
-Le pare‑feu se lancera automatiquement au démarrage (`systemctl status ufw`).
-
 ---
 
-## 3. Commandes essentielles
-### 3.1 – Lister les règles
-
+### 5. Activer le pare-feu
 ```bash
-sudo ufw status numbered    # affichage compact avec numéros
-sudo ufw status verbose     # détails + IPv6 + policies
-```
-
-### 3.2 – Autoriser des flux
-| Cas d’usage | Commande |
-|-------------|----------|
-| Autoriser **HTTP/HTTPS** | `sudo ufw allow 80,443/tcp` |
-| Autoriser **FTP passif (1024‑1048)** | `sudo ufw allow 1024:1048/tcp` |
-| Autoriser **un sous‑réseau** | `sudo ufw allow from 10.10.0.0/24 to any port 22 proto tcp` |
-| Autoriser **une IP** | `sudo ufw allow from 203.0.113.42 to any port 54321 proto tcp` |
-
-### 3.3 – Bloquer des flux
-
-```bash
-# Bloquer une IP source\sudo ufw deny from 203.0.113.66
-
-# Bloquer tout trafic sortant vers le port 25 (anti‑spam)
-sudo ufw deny out 25/tcp
-```
-
-### 3.4 – Supprimer / réinitialiser
-
-```bash
-sudo ufw delete <numéro>   # après ufw status numbered
-sudo ufw reset             # RAZ totale (demande confirmation)
-```
-
-### 3.5 – Profils applicatifs
-
-```bash
-sudo ufw app list              # voir la liste
-sudo ufw app info "Samba"       # détails (ports, proto)
-sudo ufw allow "Nginx Full"     # ouvre 80 + 443
-```
-
-Les profils sont stockés dans `/etc/ufw/applications.d/`.
-
----
-
-## 4. Exemples pratiques (scénarios)
-### 4.1 – Serveur web + SSH restreint
-
-```bash
-sudo ufw reset
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-# SSH uniquement depuis IP admin
-sudo ufw allow from 198.51.100.5 to any port 2266 proto tcp
-# HTTP / HTTPS publics
-sudo ufw allow 80,443/tcp
 sudo ufw enable
 ```
 
-### 4.2 – Limiter le brute‑force SSH (rate limiting)
-
+Vérifier l’état :  
 ```bash
-# Autorise 10 nouvelles connexions par 30 s (IPv4 + IPv6)
-sudo ufw limit 22/tcp comment "Anti brute‑force"
+sudo ufw status verbose
 ```
 
-### 4.3 – Bloquer tout sauf mises à jour APT sortantes
+---
 
+### 6. Exemple concret : premier serveur web
+```bash
+sudo ufw allow 80,443/tcp
+```
+
+🎯 **Exemple concret** :  
+- Tu héberges un WordPress → visiteurs accèdent aux ports 80/443.  
+- MySQL est présent mais reste **fermé au public**.  
+
+---
+
+### 7. Journalisation
+```bash
+sudo ufw logging medium
+tail -f /var/log/ufw.log
+```
+
+🎯 **Exemple concret** : tu verras apparaître des IP étrangères tentant du SSH → bloquées automatiquement.
+
+---
+
+✅ **Bilan Débutant** : ton serveur est déjà bien plus sûr, avec seulement SSH + Web ouverts.
+
+---
+
+---
+
+## 🔵 Session Avancée – « Devenir maître de son firewall »
+
+Ton serveur héberge plus de services. Tu veux maintenant :  
+- Restreindre SSH à une seule IP.  
+- Cloisonner les flux sortants (anti-spam).  
+- Utiliser les profils applicatifs.  
+- Ajuster finement les règles.
+
+---
+
+### 1. Cloisonner les flux sortants
 ```bash
 sudo ufw reset
 sudo ufw default deny incoming
 sudo ufw default deny outgoing
-# DNS pour resolve
-sudo ufw allow out 53/udp
-# HTTP/HTTPS vers miroirs Debian
-sudo ufw allow out 80,443/tcp
+sudo ufw allow out 53/udp       # DNS
+sudo ufw allow out 80,443/tcp   # APT
 sudo ufw enable
 ```
 
----
-
-## 5. Fichiers internes & interaction avec iptables
-| Fichier | Rôle |
-|---------|------|
-| `/etc/ufw/user.rules` | convertit tes commandes en règles iptables (IPv4) |
-| `/etc/ufw/user6.rules` | idem pour IPv6 |
-| `/etc/ufw/before.rules` | règles évaluées **avant** celles de l’utilisateur (ex : ICMP) |
-| `/etc/ufw/after.rules`  | règles évaluées **après** |
-
-✏️ Exemple : pour bloquer le ping sur tout le système, édite *before.rules* et remplace les 4 règles ICMP `ACCEPT` par `DROP`, puis `sudo ufw reload`.
+🎯 **Exemple concret** :  
+Un malware essaie d’envoyer des mails de spam → bloqué, car port 25 interdit.  
 
 ---
 
-## 6. Journalisation (logs)
-
+### 2. Restreindre SSH à ton IP d’admin
 ```bash
-sudo ufw logging medium   # low | medium | high
-# logs : /var/log/ufw.log (rsyslog) ou journalctl -u ufw
+sudo ufw allow from 198.51.100.5 to any port 2266 proto tcp
 ```
 
-- **low** : connexions bloquées seulement.
-- **medium** : + connexions autorisées.
-- **high** : détails des paquets (verbeux).
+🎯 **Exemple concret** :  
+Seule ton IP fixe d’entreprise peut se connecter → les robots et attaquants sont exclus.  
 
 ---
 
-## 7. Sauvegarde et restauration manuelle
+### 3. Bloquer les menaces
+- Bloquer une IP qui scanne :  
+  ```bash
+  sudo ufw deny from 203.0.113.66
+  ```
+- Bloquer les envois de mails sortants (anti-spam) :  
+  ```bash
+  sudo ufw deny out 25/tcp
+  ```
 
+---
+
+### 4. Protection brute-force SSH
 ```bash
-sudo ufw export > ufw-backup.conf   # exporte les règles
-sudo ufw import ufw-backup.conf     # restaure
+sudo ufw limit 22/tcp comment "Anti brute-force"
 ```
 
+🎯 **Exemple concret** : les attaques par dictionnaire sur ton SSH sont ralenties → moins de charge serveur.
+
 ---
 
-## 8. Désactivation temporaire
-
+### 5. Profils applicatifs
 ```bash
-sudo ufw disable       # stoppe le pare‑feu
-sudo ufw enable        # ré‑active
+sudo ufw app list
+sudo ufw allow "Nginx Full"   # ouvre 80 + 443
 ```
 
+💡 **Astuce** : plus besoin de mémoriser les ports → UFW connaît déjà Samba, Apache, Postfix, etc.
+
 ---
 
-## 9. Bonnes pratiques
-- **Appliquer la stratégie « deny by default »** et n’ouvrir que ce qui est nécessaire.
-- **Limiter** les services exposés (SSH => port personnalisé + `ufw limit`).
-- Surveiller `ufw.log` pour ajuster les règles.
-- Sauvegarder la configuration après chaque modification majeure.
-- Tester depuis une deuxième session SSH avant `ufw enable`.
+### 6. Tuning interne (iptables derrière UFW)
+Exemple : désactiver le ping système (ICMP).  
+- Modifier `/etc/ufw/before.rules` (changer `ACCEPT` → `DROP` pour ICMP).  
+- Puis :  
+  ```bash
+  sudo ufw reload
+  ```
+
+🎯 **Exemple concret** : ton serveur devient invisible aux scans par ping.
+
+---
+
+### 7. Sauvegarder et restaurer
+```bash
+sudo ufw export > ufw-backup.conf
+sudo ufw import ufw-backup.conf
+```
+
+🎯 **Exemple concret** : déploiement identique d’un firewall sur 5 serveurs en un instant.
+
+---
+
+### 8. Surveiller en temps réel
+```bash
+sudo ufw logging high
+tail -f /var/log/ufw.log
+```
+
+🎯 **Exemple concret** :  
+Tu vois 500 tentatives SSH depuis la Russie → signe qu’un botnet scanne ton IP.
+
+---
+
+### 9. Bonnes pratiques
+- Toujours **deny by default**.  
+- Tester une règle dans une deuxième session SSH avant `enable`.  
+- Sauvegarder régulièrement la configuration.  
+- Associer UFW à un **IDS** (Fail2ban, CrowdSec).  
+
+---
+
+## 🎯 Conclusion du TP
+- En **débutant**, tu passes d’un serveur nu à un serveur protégé.  
+- En **avancé**, tu transformes ton serveur en **citadelle** : cloisonné, surveillé, renforcé.  
+
+👉 La prochaine étape ? Associer UFW avec **Fail2ban** pour bloquer automatiquement les IP agressives 🚀
+
 
 ---
 

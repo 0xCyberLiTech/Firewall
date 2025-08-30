@@ -306,26 +306,6 @@ iptables -P OUTPUT ACCEPT
 
 ---
 
-## 🎓 9. Exercices pratiques
-
-1. **Autoriser un service spécifique**  
-   Autorisez uniquement le port `25` (SMTP) en entrée, mais bloquez tous les autres ports de messagerie.  
-   👉 Testez avec `telnet <IP> 25`.
-
-2. **Créer une règle temporaire**  
-   Autorisez un accès SSH depuis une IP unique (`198.51.100.7`) et bloquez toutes les autres.  
-   👉 Vérifiez avec `ssh user@<serveur>` depuis cette IP.
-
-3. **Mettre en place une limite de connexion web**  
-   N’autorisez que 10 nouvelles connexions HTTP par minute.  
-   👉 Utilisez le module `hashlimit`.
-
-4. **Logging avancé**  
-   Ajoutez une règle qui log uniquement les paquets refusés sur le port `23` (Telnet).  
-   👉 Vérifiez les journaux système.
-
----
-
 <div align="center">
   <a href="https://github.com/0xCyberLiTech" target="_blank" rel="noopener">
     <img src="https://skillicons.dev/icons?i=linux,debian,bash,docker,nginx,git,vim,python,markdown" alt="Skills" width="440">

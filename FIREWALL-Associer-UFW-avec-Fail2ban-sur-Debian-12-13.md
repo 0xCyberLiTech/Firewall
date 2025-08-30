@@ -70,7 +70,7 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
 - [6. Scénarios concrets de protection](#6-scénarios-concrets-de-protection)
 - [7. Surveiller l’action de Fail2ban](#7-surveiller-laction-de-fail2ban)
 - [8. Bonnes pratiques](#8-bonnes-pratiques)
-- [🎯 Conclusion](#-conclusion)
+- [ Conclusion](#-conclusion)
 
 ---
 

@@ -94,7 +94,7 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
 ## 2. Schéma de fonctionnement
 
 ```
-        🌍 Internet
+         Internet
             |
             v
       [ Attaquant ] 

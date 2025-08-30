@@ -82,7 +82,7 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
 |:---:|:---|:---:|
 | **IPTABLES** | Introduction et configuration. | [<img src="https://img.shields.io/badge/EXPLORER-4CAF50?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-IPTABLES-INTRODUCTION-CONFIGURATION.md) |
 | **UFW** | Installation et configuration sur **Debian 12 & 13**. | [<img src="https://img.shields.io/badge/EXPLORER-4CAF50?style=for-the-badge&logo=github&logoColor=white">](FIREWALL-UFW-INTRODUCTION-INSTALLATION-CONFIGURATION.md) |
-| **UFW** | Exemples. | [<img src="https://img.shields.io/badge/EXPLORER-red?style=for-the-badge&logo=github&logoColor=white">](https://github.com/0xCyberLiTech/Firewall/blob/main/README.md) |
+| **SECURITE RENFORCEE** | Associer UFW avec Fail2ban. | [<img src="https://img.shields.io/badge/EXPLORER-red?style=for-the-badge&logo=github&logoColor=white">](https://github.com/0xCyberLiTech/Firewall/blob/main/README.md) |
 
 </div>
 

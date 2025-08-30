@@ -85,7 +85,8 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
 - Détecte les comportements suspects (**brute-force**, **scans**, etc.).
 - Ajoute **dynamiquement** des règles dans UFW pour bannir les IP malveillantes.
 
-⚠️ **Sans Fail2ban** : un robot peut faire 1000 tentatives SSH.  
+⚠️ **Sans Fail2ban** : un robot peut faire 1000 tentatives SSH.
+
 ✅ **Avec Fail2ban** : au bout de 5 échecs → l’IP est bannie automatiquement dans UFW.
 
 ---

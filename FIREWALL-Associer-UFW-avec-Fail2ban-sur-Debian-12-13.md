@@ -305,7 +305,7 @@ Anywhere DENY IN  from 203.0.113.42
   - UFW ferme les portes.  
   - Fail2ban repère et expulse les intrus insistants.  
 
-👉 Prochaine étape : intégrer **CrowdSec** pour profiter d’une base communautaire d’attaques connues 🚀
+    Prochaine étape : intégrer **CrowdSec** pour profiter d’une base communautaire d’attaques connues.
 
 ---
 

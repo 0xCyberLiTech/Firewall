@@ -33,10 +33,6 @@
 
 </div>
 
-<!--
-Optimisation SEO : mots-clés Firewall, 0xCyberLiTech, Linux, sécurité informatique, tutoriels, guides, administration système, scripts Bash, Debian, firewall, iptables, ufw, log, ressources techniques, étudiants, professionnels, formation, réseau, IT, bonnes pratiques, passionnés.
--->
-
 <div align="center">
   <img src="https://img.icons8.com/fluency/96/000000/cyber-security.png" alt="CyberSec" width="80"/>
 </div>

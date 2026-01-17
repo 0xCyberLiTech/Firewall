@@ -90,8 +90,7 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
 
 ## Définition détaillée d’un Firewall
 
-Un **firewall** (pare-feu) est un dispositif matériel ou logiciel qui surveille, filtre et contrôle le trafic réseau entre différentes zones de confiance (ex : Internet ↔ réseau interne).  
-Il applique des règles pour autoriser, refuser ou rediriger les paquets selon des critères précis : adresses IP, ports, protocoles, état de connexion, etc.
+Un **firewall** (pare-feu) est un dispositif matériel ou logiciel qui surveille, filtre et contrôle le trafic réseau entre différentes zones de confiance (ex : Internet ↔ réseau interne). Il applique des règles pour autoriser, refuser ou rediriger les paquets selon des critères précis : adresses IP, ports, protocoles, état de connexion, etc.
 
 ### Rôles principaux :
 - **Filtrage** : Bloquer ou autoriser des flux selon des règles.

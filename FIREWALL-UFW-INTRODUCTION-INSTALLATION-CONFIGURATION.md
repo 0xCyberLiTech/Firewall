@@ -62,11 +62,9 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
 
 ---
 
-# 🔥 TP – Sécuriser son serveur Debian 12/13 avec UFW
+# 🔥 Tutoriel UFW – Sécuriser son serveur Debian 12/13 avec UFW
 
 ---
-
-# Tutoriel UFW : Installation, Configuration et Sécurisation
 
 ## 📑 Sommaire :
 

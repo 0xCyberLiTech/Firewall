@@ -88,37 +88,158 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
 
 ## 💡 **Qu'est-ce qu'un firewall ?**
 
-Un firewall est un système de sécurité réseau basé sur des règles qui surveille et contrôle le trafic réseau entrant et sortant. Il établit une barrière entre un réseau interne de confiance et des réseaux externes non fiables (comme Internet), ou entre différentes zones de sécurité au sein d'un même réseau.
 
-### Fonctionnalités et Mécanismes Clés :
+# Théorie et Schémas sur les Firewalls
 
-Filtrage de Paquets (Packet Filtering): C'est le niveau le plus fondamental. Le firewall examine les en-têtes de chaque paquet (adresses IP source/destination, ports source/destination, protocole) et décide de le laisser passer ou de le bloquer en fonction d'un ensemble de règles prédéfinies. Ce type est souvent stateless (ne maintient pas l'état des connexions).
+## Définition détaillée d’un Firewall
 
-Inspection d'État (Stateful Inspection / Stateful Firewall): Plus avancé que le filtrage de paquets, ce type de firewall maintient un tableau des connexions actives. Il est capable de distinguer les paquets qui font partie d'une connexion établie (et donc légitimes) des paquets qui tentent d'initier une nouvelle connexion non autorisée. Cela améliore considérablement la sécurité et la performance.
+Un **firewall** (pare-feu) est un dispositif matériel ou logiciel qui surveille, filtre et contrôle le trafic réseau entre différentes zones de confiance (ex : Internet ↔ réseau interne).  
+Il applique des règles pour autoriser, refuser ou rediriger les paquets selon des critères précis : adresses IP, ports, protocoles, état de connexion, etc.
 
-Filtrage au Niveau Applicatif (Application-Level Gateway / Proxy Firewall): Ces firewalls opèrent au niveau de la couche application du modèle OSI. Ils peuvent comprendre des protocoles spécifiques (HTTP, FTP, SMTP, etc.) et inspecter le contenu même des paquets pour identifier des menaces complexes, comme des attaques basées sur des failles applicatives ou des malwares dissimulés. Ils agissent comme des proxies, établissant deux connexions distinctes (client-firewall et firewall-serveur).
+### Rôles principaux :
+- **Filtrage** : Bloquer ou autoriser des flux selon des règles.
+- **Journalisation** : Tracer les accès et tentatives.
+- **Traduction d’adresses (NAT)** : Masquer ou rediriger des adresses IP.
+- **Segmentation** : Isoler des zones (DMZ, LAN, WAN).
+- **Inspection d’état** : Suivre l’état des connexions (stateful).
 
-- Next-Generation Firewalls (NGFW) : Les NGFW intègrent les fonctionnalités des firewalls traditionnels avec des capacités supplémentaires, notamment :
-- Deep Packet Inspection (DPI) : Analyse approfondie du contenu des paquets au-delà des en-têtes.
-- Intrusion Prevention Systems (IPS) : Détection et blocage des tentatives d'intrusion et des exploits connus.
-- Identification d'applications et d'utilisateurs : Capacité à identifier les applications spécifiques utilisées et les utilisateurs, indépendamment du port ou du protocole.
-- Filtrage d'URL et de contenu : Blocage de l'accès à des sites web malveillants ou inappropriés.
-- Intégration de la gestion des menaces unifiée (UTM) : Combinaison de plusieurs fonctions de sécurité (antivirus, antispam, VPN) au sein d'un seul appareil.
+---
 
-Modes de Déploiement Courants :
+## 1. Schéma général : Positionnement d’un firewall
 
-- Basé sur l'hôte (Host-based Firewall) : Logiciel installé directement sur un ordinateur individuel, protégeant ce dernier spécifiquement.
-- Basé sur le réseau (Network-based Firewall) : Appliance matérielle ou logicielle déployée au point d'entrée d'un réseau, protégeant l'ensemble des systèmes derrière lui. Peut être déployé en mode "bridge" (transparent) ou "routed" (avec des interfaces IP).
+```
+   [Internet]
+        |
+   +----v----+
+   | Firewall|
+   +----+----+
+        |
+   [Réseau privé]
+```
 
-### 🎯 **Objectifs et Bénéfices d'un firewall.**
+---
 
-- Séparation des zones de confiance : Délimiter des zones de sécurité (DMZ, réseaux internes, réseaux invités).
-- Application de politiques de sécurité : Mettre en œuvre des règles d'accès précises basées sur l'identité, l'application, le protocole, l'adresse IP, etc.
-- Prévention des intrusions : Bloquer les accès non autorisés et les tentatives d'attaque.
-- Contrôle du trafic sortant : Empêcher l'exfiltration de données ou la communication avec des serveurs de commande et contrôle (C2).
-- Conformité réglementaire : Contribuer à la satisfaction des exigences de conformité (RGPD, PCI DSS, etc.).
+## 2. Logique de décision d’un firewall (filtrage)
 
-En synthèse, un firewall est un composant fondamental de la sécurité réseau, essentiel pour établir et maintenir la posture de sécurité d'une organisation en contrôlant le flux de données et en atténuant les menaces externes et internes.
+```
++-------------------+
+|   Paquet réseau   |
++-------------------+
+         |
+         v
++------------------------+
+|  Règle correspondante ?|
++------------------------+
+   | Oui         | Non
+   v             v
+[Action]     [Bloqué]
+```
+
+---
+
+## 3. Filtrage stateless vs stateful
+
+- **Stateless** : Le firewall examine chaque paquet indépendamment, sans tenir compte du contexte.
+- **Stateful** : Le firewall garde en mémoire l’état des connexions (ex : TCP SYN/ACK), ce qui permet de n’autoriser que les paquets attendus dans une session.
+
+### Schéma : Suivi d’état (stateful)
+
+```
+[Client] ---- SYN ----> [Firewall] ----> [Serveur]
+         <--- SYN/ACK --
+         ---- ACK ------>
+```
+Le firewall autorise les paquets de réponse uniquement s’ils correspondent à une connexion initiée.
+
+---
+
+## 4. Translation d’adresses (NAT)
+
+La **NAT** (Network Address Translation) permet de faire correspondre des adresses IP privées à une adresse publique, pour masquer le réseau interne ou rediriger des ports.
+
+### Schéma : NAT simple
+
+```
+[LAN: 192.168.1.10] --+
+[LAN: 192.168.1.11] --+--> [Firewall NAT] --> [Internet: 203.0.113.5]
+```
+Tous les flux sortants semblent provenir de l’IP publique du firewall.
+
+### Schéma : Redirection de port (Port Forwarding)
+
+```
+[Internet:203.0.113.5:2222] --> [Firewall NAT] --> [LAN:192.168.1.10:22]
+```
+Le firewall redirige le port 2222 externe vers le port 22 d’une machine interne.
+
+---
+
+## 5. DMZ (Zone Démilitarisée)
+
+Une **DMZ** est une zone réseau intermédiaire, isolée du LAN, où l’on place les serveurs accessibles depuis Internet (web, mail, etc.).  
+Cela limite les risques pour le réseau interne en cas de compromission d’un serveur public.
+
+### Schéma : DMZ
+
+```
+           [Internet]
+                |
+           +----v----+
+           | Firewall|
+           +----+----+
+                |
+      +---------+----------+
+      |                    |
+   [DMZ]                [LAN]
+(serveurs web, etc.)   (PC internes)
+```
+
+---
+
+## 6. Exemple de règles logiques (table de filtrage)
+
+| Source           | Destination      | Port | Action    | État connexion |
+|------------------|-----------------|------|-----------|---------------|
+| Internet         | DMZ (web)       | 80   | Autoriser | NEW/ESTABLISHED|
+| Internet         | LAN             | *    | Refuser   | *             |
+| LAN              | Internet        | 80   | Autoriser | ESTABLISHED   |
+| DMZ              | LAN             | *    | Refuser   | *             |
+
+---
+
+## 7. Schéma éclaté : Flux réseau avec firewall, NAT et DMZ
+
+```
+[Internet]
+    |
+    v
++-------------------+
+|     Firewall      |
+|-------------------|
+| - Filtrage        |
+| - NAT             |
+| - Suivi d'état    |
++---+-----------+---+
+    |           |
+   DMZ         LAN
+(serveur web) (PC internes)
+```
+
+- Le firewall filtre et traduit les adresses.
+- Les flux autorisés vers la DMZ n’atteignent pas le LAN.
+- Les connexions sortantes du LAN passent par la NAT.
+
+---
+
+## 8. Résumé pédagogique
+
+- Un firewall contrôle le trafic selon des règles précises.
+- Il peut être stateless (simple) ou stateful (plus sûr).
+- Il gère la translation d’adresses (NAT) pour masquer ou rediriger.
+- Il permet de segmenter le réseau (DMZ) pour limiter les risques.
+- Les schémas aident à visualiser la logique et la circulation des flux.
+
+---
 
 ---
 

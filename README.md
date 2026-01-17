@@ -238,9 +238,6 @@ Cela limite les risques pour le réseau interne en cas de compromission d’un s
 
 ---
 
----
-
-
 <div align="center">
   <a href="https://github.com/0xCyberLiTech" target="_blank" rel="noopener">
     <img src="https://skillicons.dev/icons?i=linux,debian,bash,docker,nginx,git,vim,python,markdown" alt="Skills" width="440">

@@ -86,10 +86,7 @@ Le contenu est structuré, accessible et optimisé SEO pour répondre aux besoin
 
 ---
 
-## 💡 **Qu'est-ce qu'un firewall ?**
-
-
-# Théorie et Schémas sur les Firewalls
+# 💡 **Qu'est-ce qu'un firewall ?**
 
 ## Définition détaillée d’un Firewall
 

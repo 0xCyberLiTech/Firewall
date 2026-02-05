@@ -420,12 +420,6 @@ sudo ufw disable
 
 ---
 
-Avec ce guide, vous avez une base solide pour sécuriser vos serveurs avec UFW, comprendre la logique des règles, et aller plus loin dans la gestion de votre pare-feu Linux.  
-N’hésitez pas à enrichir ce document avec vos propres cas d’usage et schémas !
-
-
----
-
 ## 🎯 Conclusion du TP
 - En **débutant**, tu passes d’un serveur nu à un serveur protégé.  
 - En **avancé**, tu transformes ton serveur en **citadelle** : cloisonné, surveillé, renforcé.  
